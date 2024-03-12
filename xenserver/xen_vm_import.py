@@ -68,9 +68,30 @@ from ansible.module_utils.basic import (
 )
 from ansible.module_utils._text import to_native
 from ansible.module_utils.xenserver_common import XeBase
-import XeVmStart
 
 
+
+class XeVmStart(XeBase):
+    """
+    This is a xe vm_list command wrapper class
+    """
+
+    def vm_start(self, uuid=None):
+        """vm_start(str) -> dict
+        Args:
+            uuid (str): uuid of vm to start
+        Returns:
+            dict
+        """
+        #self.cmd.append(['vm-start', 'uuid=%s' % uuid])
+        self.cmd.append('vm-start')
+        self.cmd.append('uuid=%s' % uuid)
+        rc, out, err = self.module.run_command(self.cmd)
+        if rc != 0:
+            self.module.fail_json(
+                msg="Command failed rc=%d, out=%s, err=%s" % (rc, out, err)
+            )
+        return to_native(out).strip()
 
 class XeVmInstall(XeBase):
     """
