@@ -91,7 +91,7 @@ class XeVmStart(XeBase):
             self.module.fail_json(
                 msg="Command failed rc=%d, out=%s, err=%s" % (rc, out, err)
             )
-        return to_native(out).strip()
+        return to_native('Success').strip()
 
 class XeVmInstall(XeBase):
     """
